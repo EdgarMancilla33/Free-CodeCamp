@@ -1,0 +1,336 @@
+# Abrimos el archivo en modo escritura
+archivo = open("archivo.txt", "w")
+
+# Inicializamos una variable para guardar las opciones
+opcion = ""
+
+# Creamos el menú con un bucle while
+while opcion != "7":
+    print("\n--- MENÚ ---")
+    print("1. Insertar líneas de texto en el archivo")
+    print("2. Leer y mostrar todos los registros del archivo")
+    print("3. Contar y mostrar el número de líneas del archivo")
+    print("4. Contar y mostrar el total de palabras del archivo")
+    print("5. Buscar líneas que contengan una palabra")
+    print("6. Mostrar líneas numeradas del archivo")
+    print("7. Salir")
+
+    # Leemos la opción del usuario
+    opcion = input("Seleccione una opción: ")
+
+    if opcion == "1":
+        # Insertar líneas de texto en el archivo hasta que el usuario presione "S" o "s"
+        texto = ""
+        while texto.lower() != "s":
+            texto = input("Escriba una línea de texto (presione 'S' para salir): ")
+            if texto.lower() != "s":
+                archivo.write(texto + "\n")
+
+    elif opcion == "2":
+        # Leer y mostrar todos los registros del archivo
+        archivo = open("archivo.txt", "r")
+        for linea in archivo:
+            print(linea.strip())
+        archivo.close()
+
+    elif opcion == "3":
+        # Contar y mostrar el número de líneas del archivo
+        archivo = open("archivo.txt", "r")
+        num_lineas = len(archivo.readlines())
+        print(f"El archivo tiene {num_lineas} líneas.")
+        archivo.close()
+
+    elif opcion == "4":
+        # Contar y mostrar el total de palabras del archivo
+        archivo = open("archivo.txt", "r")
+        num_palabras = 0
+        for linea in archivo:
+            num_palabras += len(linea.split())
+        print(f"El archivo tiene {num_palabras} palabras.")
+        archivo.close()
+
+    elif opcion == "5":
+        # Buscar líneas que contengan una palabra
+        archivo = open("archivo.txt", "r")
+        palabra = input("Ingrese una palabra para buscar: ")
+        for linea in archivo:
+            if palabra in linea:
+                print(linea.strip())
+        archivo.close()
+
+    elif opcion == "6":
+        # Mostrar líneas numeradas del archivo
+        archivo = open("archivo.txt", "r")
+        num_linea = 1
+        for linea in archivo:
+            print(f"{num_linea}. {linea.strip()}")
+            num_linea += 1
+        archivo.close()
+
+    elif opcion == "7":
+        # Salir del programa
+        print("¡Hasta luego!")
+        archivo.close()
+
+    else:
+        # Opción inválida
+        print("Opción inválida. Por favor, seleccione una opción del menú.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## valaclava 2
+import os
+
+# Función para crear un archivo para los contactos
+def crear_archivo():
+    nombre_archivo = input("Ingrese el nombre para el archivo de contactos: ")
+    archivo = open(nombre_archivo, "w")
+    archivo.close()
+    print("Archivo creado exitosamente.")
+
+# Función para insertar un registro de contacto
+def insertar_contacto(nombre_archivo):
+    while True:
+        nombre = input("Ingrese el nombre completo del contacto (o 's' para salir): ")
+        if nombre == "s":
+            break
+        direccion = input("Ingrese la dirección del contacto: ")
+        telefono = input("Ingrese el número de teléfono del contacto: ")
+        registro = f"{nombre}, {direccion}, {telefono}\n"
+        with open(nombre_archivo, "a") as archivo:
+            archivo.write(registro)
+        print(f"Registro de {nombre} agregado exitosamente.")
+
+# Función para buscar un contacto por su número de teléfono
+def buscar_contacto(nombre_archivo):
+    telefono = input("Ingrese el número de teléfono del contacto que desea buscar: ")
+    with open(nombre_archivo, "r") as archivo:
+        for registro in archivo:
+            datos = registro.split(", ")
+            if datos[2].strip() == telefono:
+                print(f"Nombre: {datos[0]}")
+                print(f"Dirección: {datos[1]}")
+                print(f"Teléfono: {datos[2]}")
+                return
+    print(f"No se encontró ningún contacto con el número de teléfono {telefono}.")
+
+# Función para imprimir todos los registros de contacto en el archivo
+def imprimir_contactos(nombre_archivo):
+    with open(nombre_archivo, "r") as archivo:
+        for registro in archivo:
+            datos = registro.split(", ")
+            print(f"Nombre: {datos[0]}")
+            print(f"Dirección: {datos[1]}")
+            print(f"Teléfono: {datos[2]}")
+
+# Función para imprimir el número total de contactos en el archivo
+def imprimir_total_contactos(nombre_archivo):
+    with open(nombre_archivo, "r") as archivo:
+        lineas = archivo.readlines()
+        print(f"Total de contactos: {len(lineas)}")
+
+# Función principal del programa
+def main():
+    while True:
+        print("---- MENU ----")
+        print("1. Crear archivo de contactos")
+        print("2. Insertar registro de contacto")
+        print("3. Buscar contacto por número de teléfono")
+        print("4. Imprimir todos los registros de contacto")
+        print("5. Imprimir el total de contactos registrados")
+        print("6. Salir")
+        opcion = input("Ingrese la opción deseada: ")
+        if opcion == "1":
+            crear_archivo()
+        elif opcion == "2":
+            nombre_archivo = input("Ingrese el nombre del archivo donde desea insertar el registro: ")
+            insertar_contacto(nombre_archivo)
+        elif opcion == "3":
+            nombre_archivo = input("Ingrese el nombre del archivo donde desea buscar el contacto: ")
+            buscar_contacto(nombre_archivo)
+        elif opcion == "4":
+            nombre_archivo = input("Ingrese el nombre del archivo que desea imprimir: ")
+            imprimir_contactos(nombre_archivo)
+        elif opcion == "5":
+            nombre_archivo = input("Ingrese el nombre del archivo que desea imprimir: ")
+            imprimir_total_contactos(nombre_archivo)
+        elif opcion == "6":
+            print("Hasta luego.")
+            break
+       
+
+
+
+import os
+
+# Función para crear un archivo para los contactos
+def crear_archivo():
+    nombre_archivo = input("Ingrese el nombre para el archivo de contactos: ")
+    archivo = open(nombre_archivo, "w")
+    archivo.close()
+    print("Archivo creado exitosamente.")
+
+# Función para insertar un registro de contacto
+def insertar_contacto(nombre_archivo):
+    while True:
+        nombre = input("Ingrese el nombre completo del contacto (o 's' para salir): ")
+        if nombre == "s":
+            break
+        direccion = input("Ingrese la dirección del contacto: ")
+        telefono = input("Ingrese el número de teléfono del contacto: ")
+        registro = f"{nombre}, {direccion}, {telefono}\n"
+        with open(nombre_archivo, "a") as archivo:
+            archivo.write(registro)
+        print(f"Registro de {nombre} agregado exitosamente.")
+
+# Función para buscar un contacto por su número de teléfono
+def buscar_contacto(nombre_archivo):
+    telefono = input("Ingrese el número de teléfono del contacto que desea buscar: ")
+    with open(nombre_archivo, "r") as archivo:
+        for registro in archivo:
+            datos = registro.split(", ")
+            if datos[2].strip() == telefono:
+                print(f"Nombre: {datos[0]}")
+                print(f"Dirección: {datos[1]}")
+                print(f"Teléfono: {datos[2]}")
+                return
+    print(f"No se encontró ningún contacto con el número de teléfono {telefono}.")
+
+# Función para imprimir todos los registros de contacto en el archivo
+def imprimir_contactos(nombre_archivo):
+    with open(nombre_archivo, "r") as archivo:
+        for registro in archivo:
+            datos = registro.split(", ")
+            print(f"Nombre: {datos[0]}")
+            print(f"Dirección: {datos[1]}")
+            print(f"Teléfono: {datos[2]}")
+
+# Función para imprimir el número total de contactos en el archivo
+def imprimir_total_contactos(nombre_archivo):
+    with open(nombre_archivo, "r") as archivo:
+        lineas = archivo.readlines()
+        print(f"Total de contactos: {len(lineas)}")
+
+# Función principal del programa
+def main():
+    while True:
+        print("---- MENU ----")
+        print("1. Crear archivo de contactos")
+        print("2. Insertar registro de contacto")
+        print("3. Buscar contacto por número de teléfono")
+        print("4. Imprimir todos los registros de contacto")
+        print("5. Imprimir el total de contactos registrados")
+        print("6. Salir")
+        opcion = input("Ingrese la opción deseada: ")
+        if opcion == "1":
+            crear_archivo()
+        elif opcion == "2":
+            nombre_archivo = input("Ingrese el nombre del archivo donde desea insertar el registro: ")
+            insertar_contacto(nombre_archivo)
+        elif opcion == "3":
+            nombre_archivo = input("Ingrese el nombre del archivo donde desea buscar el contacto: ")
+            buscar_contacto(nombre_archivo)
+        elif opcion == "4":
+            nombre_archivo = input("Ingrese el nombre del archivo que desea imprimir: ")
+            imprimir_contactos(nombre_archivo)
+        elif opcion == "5":
+            nombre_archivo = input("Ingrese el nombre del archivo que desea imprimir: ")
+            imprimir_total_contactos(nombre_archivo)
+        elif opcion == "6":
+            print("Hasta luego.")
+            break
+       
+import os
+
+# Función para crear un archivo para los contactos
+def crear_archivo():
+    nombre_archivo = input("Ingrese el nombre para el archivo de contactos: ")
+    archivo = open(nombre_archivo, "w")
+    archivo.close()
+    print("Archivo creado exitosamente.")
+
+# Función para insertar un registro de contacto
+def insertar_contacto(nombre_archivo):
+    while True:
+        nombre = input("Ingrese el nombre completo del contacto (o 's' para salir): ")
+        if nombre == "s":
+            break
+        direccion = input("Ingrese la dirección del contacto: ")
+        telefono = input("Ingrese el número de teléfono del contacto: ")
+        registro = f"{nombre}, {direccion}, {telefono}\n"
+        with open(nombre_archivo, "a") as archivo:
+            archivo.write(registro)
+        print(f"Registro de {nombre} agregado exitosamente.")
+
+# Función para buscar un contacto por su número de teléfono
+def buscar_contacto(nombre_archivo):
+    telefono = input("Ingrese el número de teléfono del contacto que desea buscar: ")
+    with open(nombre_archivo, "r") as archivo:
+        for registro in archivo:
+            datos = registro.split(", ")
+            if datos[2].strip() == telefono:
+                print(f"Nombre: {datos[0]}")
+                print(f"Dirección: {datos[1]}")
+                print(f"Teléfono: {datos[2]}")
+                return
+    print(f"No se encontró ningún contacto con el número de teléfono {telefono}.")
+
+# Función para imprimir todos los registros de contacto en el archivo
+def imprimir_contactos(nombre_archivo):
+    with open(nombre_archivo, "r") as archivo:
+        for registro in archivo:
+            datos = registro.split(", ")
+            print(f"Nombre: {datos[0]}")
+            print(f"Dirección: {datos[1]}")
+            print(f"Teléfono: {datos[2]}")
+
+# Función para imprimir el número total de contactos en el archivo
+def imprimir_total_contactos(nombre_archivo):
+    with open(nombre_archivo, "r") as archivo:
+        lineas = archivo.readlines()
+        print(f"Total de contactos: {len(lineas)}")
+
+# Función principal del programa
+def main():
+    while True:
+        print("---- MENU ----")
+        print("1. Crear archivo de contactos")
+        print("2. Insertar registro de contacto")
+        print("3. Buscar contacto por número de teléfono")
+        print("4. Imprimir todos los registros de contacto")
+        print("5. Imprimir el total de contactos registrados")
+        print("6. Salir")
+        opcion = input("Ingrese la opción deseada: ")
+        if opcion == "1":
+            crear_archivo()
+        elif opcion == "2":
+            nombre_archivo = input("Ingrese el nombre del archivo donde desea insertar el registro: ")
+            insertar_contacto(nombre_archivo)
+        elif opcion == "3":
+            nombre_archivo = input("Ingrese el nombre del archivo donde desea buscar el contacto: ")
+            buscar_contacto(nombre_archivo)
+        elif opcion == "4":
+            nombre_archivo = input("Ingrese el nombre del archivo que desea imprimir: ")
+            imprimir_contactos(nombre_archivo)
+        elif opcion == "5":
+            nombre_archivo = input("Ingrese el nombre del archivo que desea imprimir: ")
+            imprimir_total_contactos(nombre_archivo)
+        elif opcion == "6":
+            print("Hasta luego.")
+            break
+       
